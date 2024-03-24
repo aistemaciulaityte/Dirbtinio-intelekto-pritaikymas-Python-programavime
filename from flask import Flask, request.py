@@ -1,4 +1,5 @@
 from flask import Flask, request
+from fractions import Fraction
 
 app = Flask(__name__)
 
@@ -23,6 +24,24 @@ def dalyba(x, y):
     else:
         return "Dalyba iš nulio negalima"
 
+# Trupmenų sudėtis
+def trupmenu_sudetis(x, y):
+    return x + y
+
+# Trupmenų atimtis
+def trupmenu_atimtis(x, y):
+    return x - y
+
+# Trupmenų daugyba
+def trupmenu_daugyba(x, y):
+    return x * y
+
+# Trupmenų dalyba
+def trupmenu_dalyba(x, y):
+    if y != 0:
+        return x / y
+    else:
+        return "Dalyba iš nulio negalima"
 
 @app.route("/")  # Route1
 def hello_world():
@@ -56,11 +75,22 @@ def skaiciavimo():
     sandauga = daugyba(skaicius1, skaicius2)
     dalmuo = dalyba(skaicius1, skaicius2)
 
+    # Trupmenų skaiciavimas
+    trupmenu_suma = trupmenu_sudetis(Fraction(skaicius1), Fraction(skaicius2))
+    trupmenu_skirtumas = trupmenu_atimtis(Fraction(skaicius1), Fraction(skaicius2))
+    trupmenu_sandauga = trupmenu_daugyba(Fraction(skaicius1), Fraction(skaicius2))
+    trupmenu_dalmuo = trupmenu_dalyba(Fraction(skaicius1), Fraction(skaicius2))
+
     return f"""
     <p>Sudetis: {suma}</p>
     <p>Atimtis: {skirtumas}</p>
     <p>Daugyba: {sandauga}</p>
     <p>Dalyba: {dalmuo}</p>
+    <hr>
+    <p>Trupmenų Sudėtis: {trupmenu_suma}</p>
+    <p>Trupmenų Atimtis: {trupmenu_skirtumas}</p>
+    <p>Trupmenų Daugyba: {trupmenu_sandauga}</p>
+    <p>Trupmenų Dalyba: {trupmenu_dalmuo}</p>
     """
 
 
